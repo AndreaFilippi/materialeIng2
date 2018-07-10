@@ -30,6 +30,7 @@ function startGame() {
  * @return Description of returned value.
  */
 function aggiornaLista() {
+    alert("ciao");
     for (i = 0; i < game.score.length; i++) {
         document.write("nome:" + game.player[i] + ", score : " + game.score[i]);
     }

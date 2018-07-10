@@ -77,11 +77,14 @@
     </div>
     
     <script type="text/javascript">
+        
         function bearsViewModel() {
+            
             var self = this;
             self.bearsURI = 'https://is2-bears.herokuapp.com/api/bears';
             self.bears = ko.observableArray();
             self.ajax = function(uri, method, data) {
+                console.log("main ajax")
                 var request = {
                     url: uri,
                     type: method,
@@ -97,10 +100,14 @@
                 return $.ajax(request);
             }
             self.beginAdd = function() {
+                console.log("main BeginAdd")
                 $('#add').modal('show');
             }
             self.add = function(bear) {
+                console.log("main add con ajax con done")
                 self.ajax(self.bearsURI, 'POST', bear).done(function(data) {
+                    console.log("info ricevute: ")
+                    console.log(data)
                     self.bears.push({
                         uri: ko.observable(self.bearsURI + '/' + data._id),
                         name: ko.observable(data.name)
@@ -108,22 +115,26 @@
                 });
             }
             self.beginEdit = function(bear) {
+                console.log("main BeginEdit")
                 editBearViewModel.setBear(bear);
                 $('#edit').modal('show');
             }
             self.edit = function(bear, data) {
+                console.log("main edit")
                 self.ajax(bear.uri(), 'PUT', data).done(function(data) {
                     var i = self.bears.indexOf(bear);
                     self.bears()[i].name(data.name);
                 });
             }
             self.remove = function(bear) {
+                console.log("main remove")
                 self.ajax(bear.uri(), 'DELETE').done(function() {
                     self.bears.remove(bear);
                 });
             }
             
             self.ajax(self.bearsURI, 'GET').done(function(data) {
+                console.log("main ajax con done")
                 for (var i = 0; i < data.length; i++) {
                     self.bears.push({
                         uri: ko.observable(self.bearsURI + '/' + data[i]._id),
@@ -136,11 +147,13 @@
             });
             
         }
+
         function AddBearViewModel() {
             var self = this;
             self.name = ko.observable();
  
             self.addBear = function() {
+                console.log("add addBear")
                 $('#add').modal('hide');
                 bearsViewModel.add({
                     name: self.name()
@@ -148,17 +161,20 @@
                 self.name("");
             }
         }
+
         function EditBearViewModel() {
             var self = this;
             self.name = ko.observable();
  
             self.setBear = function(bear) {
+                console.log("edit setBear")
                 self.bear = bear;
                 self.name(bear.name());
                 $('edit').modal('show');
             }
  
             self.editBear = function() {
+                console.log("edit editBear")
                 $('#edit').modal('hide');
                 bearsViewModel.edit(self.bear, {
                     name: self.name()

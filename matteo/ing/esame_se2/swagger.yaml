@@ -1,0 +1,110 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: "Chat"
+  description: astronauti
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Swagger API Team
+    email: foo@example.com
+    url: http://exams.jointresearch.net
+  license:
+    name: MIT
+    url: http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
+host: trentose2jan12-esame-dalponte.herokuapp.com
+basePath: /astro
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /:   
+    post:
+      description: crea nuovo utente.
+      parameters:
+        - name: utente
+          in: body
+          description: The person to create.
+          schema:
+            $ref: '#/definitions/nuovo_utente'
+            required:
+              - firstName
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              isInSpace:
+                type: string
+      responses:
+        201:
+          description: risposta
+          schema:
+            $ref: '#/definitions/risposta_utente'
+            
+    get:
+      description: ritorna info di tutti gli astronauti
+      operationId: astronauti
+      responses:
+        200:
+          description: OKuser
+          schema:
+            $ref: '#/definitions/risposta_utente'
+
+  /{id}:
+    get:
+      description: ritorna info astronauta
+      parameters:
+        - name: id
+          in: path
+          description: user
+          required: true
+          type: string
+      responses:
+        200:
+          description: OKuser
+          schema:
+            $ref: '#/definitions/risposta_utente'
+            
+    put:
+      description: aggiorna utente.
+      parameters:
+        - name: id
+          in: path
+          description: user
+          required: true
+          type: string
+      responses:
+        201:
+          description: risposta
+          schema:
+            $ref: '#/definitions/risposta_utente'
+            
+definitions:
+  risposta_utente:
+    allOf:
+      - required:
+        - ID
+        properties:
+          ID:
+            type: string
+          firstName:
+            type: string
+          lastName:
+            type: string
+          isInSpace:
+            type: string
+  nuovo_utente:
+    required:
+      - firstName
+      - lastName
+      - isInSpace
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      isInSpace:
+        type: object

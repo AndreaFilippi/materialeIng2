@@ -2,16 +2,18 @@
 
 var secret = 44;
 var guess = 0;
+var attempt = 0;
 
 while (secret != guess)
 {
+    attempt = attempt+1;
     guess = prompt('Guess the secret number [0-100]');
     if (guess == secret)
     {
         alert("You won!");
     }
 }
-
+console.log("tentativi: "+ attempt);
 //count the number of tentatives?
 
 //for breaks and continue

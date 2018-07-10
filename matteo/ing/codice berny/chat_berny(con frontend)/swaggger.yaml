@@ -1,0 +1,279 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: "Chat REST"
+  description: A simple Chat RESTFul with MongoDB
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Simone Bernabè
+    email: simone.bernabe@studenti.unitn.it
+    url: http://madskristensen.net
+  license:
+    name: MIT
+    url: http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
+host: morning-shore-18419.herokuapp.com
+basePath: /
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /users:
+    get:
+      description: Ritorna il vettore di utenti
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        200:
+          description: A list of users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+              
+  /user:
+    post:
+      description: Create a new user
+      operationId: newUser
+      parameters:
+        - name: user
+          in: body
+          description: Utente da aggiungere al database
+          schema:
+            $ref: '#/definitions/NewUser'
+      responses:
+        201:
+          description: user created response
+          schema:
+            $ref: '#/definitions/NewUser'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    
+  /user/{id}:
+    get:
+      description: Ritorna l'utente con quel id
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+        - name: id
+          in: path
+          description: ID dell'utente da visionare
+          required: true
+          type: string
+      responses:
+        200:
+          description: Risposta con l'utente richiesto
+          schema:
+            $ref: '#/definitions/User'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      description: Aggiorna la persona con quel ID
+      parameters:
+        - name: id
+          in: path
+          description: ID della persona da aggiornare
+          required: true
+          type: string
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        202:
+          description: Aggiorna la persona
+          schema:
+            $ref: '#/definitions/User'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+            
+  /rooms:
+    get:
+      description: Ritorna il vettore di stanza
+      responses:
+        200:
+          description: La lista di stanze
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Room'
+              
+  /room:
+    post:
+      description: Create a new room
+      operationId: newRoom
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+        - name: stanza
+          in: body
+          description: Stanza da aggiungere al database
+          schema:
+            $ref: '#/definitions/NewRoom'
+      responses:
+        201:
+          description: Room created response
+          schema:
+            $ref: '#/definitions/NewRoom'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /room/{id}:
+    put:
+      description: Aggiorna la stanza con quel ID
+      parameters:
+        - name: id
+          in: path
+          description: ID della stanza da aggiornare
+          required: true
+          type: string
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        202:
+          description: Aggiorna la stanza
+          schema:
+            $ref: '#/definitions/User'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /msg:
+    get:
+      description: Ritorna i messaggi con i filtri specificati
+      operationId: getMsg
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+        - name: room
+          in: query
+          description: Stanza in cui prendere i messaggi
+          required: false
+          type: string
+        - name: date
+          in: query
+          description: Data in cui prendere i messaggi
+          required: false
+          type: string
+          format: date
+      responses:
+        200:
+          description: La lista di messaggi
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Message'
+    post:
+      description: Create a new message
+      operationId: newMsg
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+        - name: messaggio
+          in: body
+          description: Messaggio da aggiungere al database
+          schema:
+            $ref: '#/definitions/NewMessage'
+      responses:
+        201:
+          description: Message created response
+          schema:
+            $ref: '#/definitions/NewMessage'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+          
+definitions:
+  User:
+    allOf:
+      - $ref: '#/definitions/NewUser'
+      - required:
+        - id
+        properties:
+          id:
+            type: string
+  NewUser:
+    required:
+      - name
+      - password
+    properties:
+      name:
+        type: string
+      password: 
+        type: string
+        
+  Room: 
+    allOf:
+      - $ref: '#/definitions/NewRoom'
+      - required:
+        - id
+        properties:
+          id: 
+            type: string
+  
+  NewRoom:
+    required:
+      - name
+    properties:
+      name: 
+        type: string
+        
+  Message: 
+    allOf:
+      - $ref: '#/definitions/NewMessage'
+      - required:
+        - id
+        properties:
+          id: 
+            type: string
+  
+  NewMessage:
+    required:
+      - testo
+      - stanza
+      - user
+    properties:
+      name: 
+        type: string
+      stanza: 
+        type: string
+      user: 
+        type: string
+        
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string

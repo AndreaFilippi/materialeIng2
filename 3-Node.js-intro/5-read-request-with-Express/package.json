@@ -1,0 +1,14 @@
+{
+  "name": "5-read-request-with-express",
+  "version": "1.0.0",
+  "description": "Online material:\r - http://expressjs.com/it/starter/installing.html\r - http://expressjs.com/it/starter/hello-world.html",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marco",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}

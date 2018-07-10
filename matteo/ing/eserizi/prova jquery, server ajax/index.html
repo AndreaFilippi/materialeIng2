@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>titolo</title>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+    </head>
+    <body>
+        <h1>questa è una prova di ajax con jquery</h1>
+        
+        <input type="text" id="username" placeholder="Task title" style="width: 150px;"><br>
+        <input type="text" id="password" placeholder="Task title" style="width: 150px;"><br>
+        <button onclick="add()">Add Task</button>
+        <br>
+        <br>        
+        <p id="txt_username">text</p>
+        <p id="txt_password">text</p>
+        <p id="ajax_username">textajax</p>
+        <p id="ajax_password">textajax</p>
+        
+        <script type="text/javascript">
+        let data ={};
+            function add (){
+                data.name=$("#username").val();
+                data.password = $("#password").val();
+                $("#txt_username").text(data.name);
+                $("#txt_password").text(data.password);
+                $.ajax({
+                    // definisco il tipo della chiamata
+                    type: "GET",
+                    // specifico la URL della risorsa da contattare
+                    url: "http://localhost:8080/",
+                    // passo dei dati alla risorsa remota
+                    data: data,
+                    // definisco il formato della risposta
+                    dataType: "json",
+                    // imposto un'azione per il caso di successo
+                    success: function(risposta){
+                        alert(risposta);
+                        $("ajax_username").text(risposta);
+                    },
+                    // ed una per il caso di fallimento
+                   
+                })
+            }
+        </script>
+    </body>
+</html>

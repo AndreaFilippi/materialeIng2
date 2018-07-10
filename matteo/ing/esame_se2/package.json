@@ -1,0 +1,21 @@
+{
+  "name": "pak",
+  "version": "1.0.0",
+  "description": "pakage offline",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "jest": "^22.0.5",
+    "jsonwebtoken": "^8.1.0",
+    "mongoose": "^4.13.9",
+    "node-fetch": "^1.7.3",
+    "util": "^0.10.3",
+    "uuid-v4": "^0.1.0"
+  }
+}

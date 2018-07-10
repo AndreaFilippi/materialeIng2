@@ -37,7 +37,7 @@
             </tr>
             <!-- /ko -->
         </table>
-        <button data-bind="click: beginAdd" class="btn">Add Task</button>
+        <button data-bind="click: beginAdd" class="btn">Add Task pagina</button>
     </div>
     <div id="add" class="modal hide fade" tabindex="=1" role="dialog" aria-labelledby="addDialogLabel" aria-hidden="true">
         <div class="modal-header">
@@ -61,7 +61,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button data-bind="click: addTask" class="btn btn-primary">Add Task</button>
+            <button data-bind="click: addTask" class="btn btn-primary">Add Task tendina</button>
             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
         </div>
     </div>
@@ -167,6 +167,7 @@
                 task.done(true);
             }
         }
+
         function AddTaskViewModel() {
             var self = this;
             self.title = ko.observable();
@@ -182,6 +183,7 @@
                 self.description("");
             }
         }
+
         function EditTaskViewModel() {
             var self = this;
             self.title = ko.observable();
@@ -189,7 +191,7 @@
             self.done = ko.observable();
  
             self.setTask = function(task) {
-                self.task = task;
+                self.task = task;               //qui viene creato task
                 self.title(task.title());
                 self.description(task.description());
                 self.done(task.done());

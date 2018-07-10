@@ -42,21 +42,20 @@
         }
         delay(1000)
             .then( () => {
-                //console.log("One second passed");
+                console.log("One second passed then()");
                 return delay(1000);
-            } )
-            .then( (value) => {
-                //console.log("One second passed " + value)
+            } ) .then( (value) => {
+                console.log("One second passed ther(value)" + value)
             } );
 
         
         var promise = delay(1000).then( () => {
-                console.log("One second passed");
+                console.log("One second passed eseguito dopo then()");
                 return delay(1000);
             } );
         for(var i=0; i<5; i++) {
             promise = promise.then( () => {
-                console.log("One second passed");
+                console.log("passato un secondo nel for");
                 return delay(1000);
             } );
         }
@@ -77,8 +76,8 @@
         }
         delay2(1000)
             .then(
-                () => {console.log("One second passed");},
-                () => {console.log("Interval greater than 500");}
+                () => {console.log("One second passed");},          //se risolve
+                () => {console.log("Interval greater than 500");}   //se fallisce
              );
 
 
@@ -94,7 +93,10 @@
                 return delay(interval);
             }
         };
-        //animationTimeout(() => console.log("First frame"), 1, 1000).then(() => console.log("First frame"), () => console.log("Other frames"));
+        animationTimeout(() => console.log("First frame"), 3, 499) 
+            .then(  () => console.log("First frame"),
+                    () => console.log("Other frames")//opzionale
+                ); //ne passo due una per gestire l' errore
 
         function animationRepeat(animation, interval, times) {
             return new Promise(function(resolve, reject) {
